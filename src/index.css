@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,500&display=swap');
+
+:root {
+  --bg: #f3ead8;
+  --bg-glow: #faf4e8;
+  --ink: #16130f;
+  --ink-muted: #5c5347;
+  --tan: #c9b48c;
+  --accent-green: #b6f26d;
+  --accent-green-deep: #2f9e3a;
+  --danger: #e23b3b;
+  --link-blue: #3b6ef5;
+  --input-border: #e4d8c2;
+  --display: 'DM Sans', 'Avenir Next', 'Segoe UI', sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--display);
+  color: var(--ink);
+  background:
+    radial-gradient(1200px 600px at 50% -10%, var(--bg-glow), transparent 60%),
+    linear-gradient(180deg, #f7efdf 0%, var(--bg) 45%, #ebe0c8 100%);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  width: 100%;
+}
+
+button,
+input {
+  font: inherit;
+}

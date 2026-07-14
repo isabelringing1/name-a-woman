@@ -1,0 +1,93 @@
+{
+  "durationSeconds": 300,
+  "categories": [
+    {
+      "id": "women",
+      "name": "Women",
+      "display_name": "women",
+      "resultLabel": "Women",
+      "prompt": "Name a woman*",
+      "prepHeadline": "How many women* can you name in 5 minutes?",
+      "disclaimer": "*must have a Wikipedia page",
+      "validator": "wikipedia",
+      "wikipedia": {
+        "gender": "female"
+      }
+    },
+    {
+      "id": "pokemon",
+      "name": "Pokémon",
+      "display_name": "Pokémon",
+      "resultLabel": "Pokémon",
+      "prompt": "Name a Pokémon",
+      "prepHeadline": "How many Pokémon can you name in 5 minutes?",
+      "disclaimer": null,
+      "validator": "static",
+      "listUrl": "/data/pokemon.json",
+      "aliases": {
+        "nidoran": "Nidoran♀",
+        "nidoranf": "Nidoran♀",
+        "nidoranm": "Nidoran♂",
+        "mrmime": "Mr. Mime",
+        "mr.mime": "Mr. Mime",
+        "mimejr": "Mime Jr.",
+        "mimejr.": "Mime Jr.",
+        "farfetchd": "Farfetch'd",
+        "farfetch'd": "Farfetch'd",
+        "sirfetchd": "Sirfetch'd",
+        "sirfetch'd": "Sirfetch'd",
+        "flabebe": "Flabébé",
+        "typenull": "Type: Null",
+        "type:null": "Type: Null",
+        "porygonz": "Porygon-Z",
+        "porygon-z": "Porygon-Z"
+      }
+    },
+    {
+      "id": "men",
+      "name": "Men",
+      "display_name": "men",
+      "resultLabel": "Men",
+      "prompt": "Name a man*",
+      "prepHeadline": "How many men* can you name in 5 minutes?",
+      "disclaimer": "*must have a Wikipedia page",
+      "validator": "wikipedia",
+      "wikipedia": {
+        "gender": "male"
+      }
+    },
+    {
+      "id": "presidents",
+      "name": "U.S. Presidents",
+      "display_name": "U.S. Presidents",
+      "resultLabel": "U.S. Presidents",
+      "prompt": "Name a U.S. President",
+      "prepHeadline": "How many U.S. Presidents can you name in 5 minutes?",
+      "disclaimer": null,
+      "validator": "static",
+      "listUrl": "/data/presidents.json",
+      "aliases": {
+        "jfk": "John F. Kennedy",
+        "fdr": "Franklin D. Roosevelt",
+        "fdr.": "Franklin D. Roosevelt",
+        "teddy roosevelt": "Theodore Roosevelt",
+        "ted roosevelt": "Theodore Roosevelt",
+        "lbj": "Lyndon B. Johnson",
+        "rmn": "Richard Nixon",
+        "dick nixon": "Richard Nixon",
+        "gwb": "George W. Bush",
+        "w bush": "George W. Bush",
+        "george w bush": "George W. Bush",
+        "george w. bush": "George W. Bush",
+        "h w bush": "George H. W. Bush",
+        "hw bush": "George H. W. Bush",
+        "george hw bush": "George H. W. Bush",
+        "george h.w. bush": "George H. W. Bush",
+        "george h. w. bush": "George H. W. Bush",
+        "obama": "Barack Obama",
+        "trump": "Donald Trump",
+        "biden": "Joe Biden"
+      }
+    }
+  ]
+}
