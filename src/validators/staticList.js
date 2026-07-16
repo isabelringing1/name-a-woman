@@ -1,15 +1,17 @@
 import { normalizeKey, trimInput } from './normalize.js'
+import { publicUrl } from '../utils/publicUrl.js'
 
 const listCache = new Map()
 
 export async function loadStaticList(listUrl) {
-  if (listCache.has(listUrl)) return listCache.get(listUrl)
+  const url = publicUrl(listUrl)
+  if (listCache.has(url)) return listCache.get(url)
 
-  const res = await fetch(listUrl)
-  if (!res.ok) throw new Error(`Failed to load list: ${listUrl}`)
+  const res = await fetch(url)
+  if (!res.ok) throw new Error(`Failed to load list: ${url}`)
   const names = await res.json()
   const index = buildIndex(names)
-  listCache.set(listUrl, index)
+  listCache.set(url, index)
   return index
 }
 

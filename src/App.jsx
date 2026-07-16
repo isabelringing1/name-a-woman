@@ -5,6 +5,7 @@ import { GameScreen } from './components/GameScreen'
 import { Onboarding } from './components/Onboarding'
 import { Results } from './components/Results'
 import { usePersistedGame } from './hooks/usePersistedGame'
+import { publicUrl } from './utils/publicUrl'
 import { loadStaticList } from './validators/staticList'
 import './App.css'
 
@@ -27,7 +28,7 @@ export default function App() {
 
     async function boot() {
       try {
-        const res = await fetch('/data/categories.json')
+        const res = await fetch(publicUrl('data/categories.json'))
         if (!res.ok) throw new Error('Could not load categories')
         const data = await res.json()
 
