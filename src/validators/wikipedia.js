@@ -13,8 +13,8 @@ const GENDER_IDS = {
 }
 
 /**
- * Resolve a Wikipedia page title (following redirects) and optionally require
- * a matching Wikidata gender (`female` or `male`).
+ * Search for a Wikipedia page title (following redirects) and optionally
+ * require a matching Wikidata gender (`female` or `male`).
  */
 export async function validateWikipediaName(query, options = {}) {
   const titleQuery = trimInput(query)
@@ -24,7 +24,10 @@ export async function validateWikipediaName(query, options = {}) {
 
   const params = new URLSearchParams({
     action: 'query',
-    titles: titleQuery,
+    generator: 'search',
+    gsrsearch: titleQuery,
+    gsrnamespace: '0',
+    gsrlimit: '1',
     redirects: '1',
     prop: 'info|pageprops',
     ppprop: 'wikibase_item|disambiguation',

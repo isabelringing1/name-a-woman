@@ -109,11 +109,6 @@ export function GameScreen({ category, durationSeconds, onFinish }) {
         disabled={checking || secondsLeft <= 0}
         status={status}
       />
-      <NameList
-        names={names}
-        newestFirst
-        linkWikipedia={category.validator === 'wikipedia'}
-      />
       <button
         type="button"
         className="btn btn--give-up"
@@ -122,6 +117,11 @@ export function GameScreen({ category, durationSeconds, onFinish }) {
       >
         I'm out of {category.display_name}
       </button>
+      <NameList
+        names={names}
+        newestFirst
+        linkWikipedia={category.validator === 'wikipedia'}
+      />
     </div>
   )
 }

@@ -35,7 +35,7 @@
 }
 
 .screen--game {
-  padding-bottom: 72px;
+  padding-bottom: 24px;
 }
 
 .screen__main {
@@ -218,12 +218,12 @@
 }
 
 .btn--redo {
-  width: min(100%, 340px);
+  min-width: 168px;
   padding: 14px 20px;
-  background: var(--danger);
-  color: #fff;
+  background: #f88b5e;
+  color: #000000;
   font-size: 1.1rem;
-  margin-top: 8px;
+  margin: 16px 024px;
 }
 
 .btn--redo:hover {
@@ -231,10 +231,7 @@
 }
 
 .btn--give-up {
-  position: absolute;
-  left: 50%;
-  bottom: 8px;
-  transform: translateX(-50%);
+  margin-top: 12px;
   background: transparent;
   color: var(--ink-muted);
   font-size: 0.95rem;
@@ -254,12 +251,12 @@
 }
 
 .btn--give-up:active:not(:disabled) {
-  transform: translateX(-50%) scale(0.98);
+  transform: scale(0.98);
 }
 
 .back-link {
   position: absolute;
-  top: 0;
+  top: -15px;
   left: 0;
   appearance: none;
   border: none;

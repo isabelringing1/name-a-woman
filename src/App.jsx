@@ -140,7 +140,7 @@ export default function App() {
           onRedo={() => {
             clearResult(activeCategory.id)
             setSessionNames(null)
-            setView('prep')
+            setView('playing')
           }}
         />
       )}
