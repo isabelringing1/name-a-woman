@@ -8,7 +8,7 @@
       "resultLabel": "Women",
       "prompt": "Name a woman*",
       "prepHeadline": "How many women* can you name in 5 minutes?",
-      "disclaimer": "*must have a Wikipedia page",
+      "disclaimer": "*must be real and have a Wikipedia page",
       "validator": "wikipedia",
       "wikipedia": {
         "gender": "female"
@@ -50,7 +50,7 @@
       "resultLabel": "Men",
       "prompt": "Name a man*",
       "prepHeadline": "How many men* can you name in 5 minutes?",
-      "disclaimer": "*must have a Wikipedia page",
+      "disclaimer": "*must be real andhave a Wikipedia page",
       "validator": "wikipedia",
       "wikipedia": {
         "gender": "male"
