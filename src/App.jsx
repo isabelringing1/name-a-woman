@@ -32,11 +32,21 @@ export default function App() {
         if (!res.ok) throw new Error('Could not load categories')
         const data = await res.json()
 
-        await Promise.all(
+        const staticCategories = await Promise.all(
           data.categories
             .filter((c) => c.validator === 'static' && c.listUrl)
-            .map((c) => loadStaticList(c.listUrl)),
+            .map(async (c) => ({
+              id: c.id,
+              answerCount: (await loadStaticList(c.listUrl)).byKey.size,
+            })),
         )
+        const answerCounts = new Map(
+          staticCategories.map(({ id, answerCount }) => [id, answerCount]),
+        )
+        data.categories = data.categories.map((category) => ({
+          ...category,
+          answerCount: answerCounts.get(category.id),
+        }))
 
         if (cancelled) return
         setConfig(data)

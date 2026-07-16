@@ -65,10 +65,11 @@ export function GameScreen({ category, durationSeconds, onFinish }) {
 
   async function handleSubmit() {
     if (checking || secondsLeft <= 0) return
+    const submittedValue = value
     setChecking(true)
     setStatus('idle')
     try {
-      const result = await validateAnswer(value, category)
+      const result = await validateAnswer(submittedValue, category)
       if (!result.ok) {
         setStatus('error')
         return
@@ -82,9 +83,23 @@ export function GameScreen({ category, durationSeconds, onFinish }) {
         return
       }
 
-      setNames((prev) => [result.name, ...prev])
-      setValue('')
+      const nextNames = [result.name, ...namesRef.current]
+      namesRef.current = nextNames
+      setNames(nextNames)
+      setValue((current) => (current === submittedValue ? '' : current))
       setStatus('success')
+
+      if (
+        category.validator !== 'wikipedia' &&
+        category.answerCount > 0 &&
+        nextNames.length >= category.answerCount
+      ) {
+        if (timerRef.current != null) {
+          window.clearInterval(timerRef.current)
+          timerRef.current = null
+        }
+        setSecondsLeft(0)
+      }
     } finally {
       setChecking(false)
     }
@@ -106,7 +121,7 @@ export function GameScreen({ category, durationSeconds, onFinish }) {
           if (status !== 'idle') setStatus('idle')
         }}
         onSubmit={handleSubmit}
-        disabled={checking || secondsLeft <= 0}
+        disabled={secondsLeft <= 0}
         status={status}
       />
       <button

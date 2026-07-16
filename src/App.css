@@ -2,7 +2,11 @@
   width: min(100%, 480px);
   min-height: 100svh;
   margin: 0 auto;
-  padding: 28px 22px 36px;
+  padding:
+    calc(28px + env(safe-area-inset-top))
+    calc(22px + env(safe-area-inset-right))
+    calc(36px + env(safe-area-inset-bottom))
+    calc(22px + env(safe-area-inset-left));
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -69,6 +73,14 @@
 
 .headline--score {
   margin: 10px 0 28px;
+}
+
+.completion-message {
+  margin: -16px 0 20px;
+  font-family: var(--display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--accent-green-deep);
 }
 
 .disclaimer {

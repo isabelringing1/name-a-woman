@@ -28,7 +28,7 @@ export function Onboarding({ category, onContinue }) {
   return (
     <div className="screen screen--centered">
       <div className="screen__main">
-        <h1 className="headline">Name a woman* to begin</h1>
+        <h1 className="headline">Name a woman* to enter</h1>
         {resolvedName ? (
           <p className="resolved-name">{resolvedName}</p>
         ) : (
