@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { wikipediaUrl } from '../utils/wikipediaUrl'
 import { validateAnswer } from '../validators'
 import { NameInput } from './NameInput'
 
@@ -30,7 +31,18 @@ export function Onboarding({ category, onContinue }) {
       <div className="screen__main">
         <h1 className="headline">Name a woman* to enter</h1>
         {resolvedName ? (
-          <p className="resolved-name">{resolvedName}</p>
+          <p className="resolved-name">
+            Well done,{' '}
+            <a
+              className="resolved-name__answer"
+              href={wikipediaUrl(resolvedName)}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {resolvedName}
+            </a>{' '}
+            is a woman!
+          </p>
         ) : (
           <NameInput
             value={value}

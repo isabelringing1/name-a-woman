@@ -109,6 +109,7 @@ export default function App() {
       {view === 'list' && (
         <CategoryList
           categories={categories}
+          durationMinutes={config.durationMinutes}
           results={results}
           onSelect={openCategory}
         />
@@ -117,6 +118,7 @@ export default function App() {
       {view === 'prep' && activeCategory && (
         <CategoryPrep
           category={activeCategory}
+          durationMinutes={config.durationMinutes}
           onBack={() => {
             setActiveId(null)
             setView('list')
@@ -129,7 +131,7 @@ export default function App() {
         <GameScreen
           key={activeCategory.id}
           category={activeCategory}
-          durationSeconds={config.durationSeconds}
+          durationSeconds={config.durationMinutes * 60}
           onFinish={(names) => {
             setSessionNames(names)
             saveResult(activeCategory.id, names)

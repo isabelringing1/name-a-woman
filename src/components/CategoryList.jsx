@@ -1,8 +1,8 @@
-export function CategoryList({ categories, results, onSelect }) {
+export function CategoryList({ categories, durationMinutes, results, onSelect }) {
   return (
     <div className="screen screen--list">
       <h1 className="headline headline--top">
-        How many can you name in 5 minutes?
+        How many can you name in {durationMinutes} minutes?
       </h1>
       <div className="category-stack">
         {categories.map((category) => {

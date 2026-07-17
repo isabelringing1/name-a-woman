@@ -94,17 +94,23 @@
   margin: 0;
   width: min(100%, 340px);
   min-height: 48px;
-  display: grid;
-  place-items: center;
   padding: 10px 16px;
   border-radius: 10px;
-  background: #fff;
-  border: 1px solid var(--accent-green-deep);
   font-family: var(--display);
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--accent-green-deep);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--ink);
   box-sizing: border-box;
+}
+
+.resolved-name__answer {
+  color: var(--accent-green-deep);
+  text-decoration: none;
+}
+
+.resolved-name__answer:hover,
+.resolved-name__answer:focus-visible {
+  text-decoration: underline;
 }
 
 .footnote {

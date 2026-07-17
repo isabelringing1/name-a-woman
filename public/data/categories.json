@@ -1,5 +1,5 @@
 {
-  "durationSeconds": 300,
+  "durationMinutes": 3,
   "categories": [
     {
       "id": "women",
@@ -7,7 +7,7 @@
       "display_name": "women",
       "resultLabel": "Women",
       "prompt": "Name a woman*",
-      "prepHeadline": "How many women* can you name in 5 minutes?",
+      "prepHeadline": "How many women* can you name in {durationMinutes} minutes?",
       "disclaimer": "*must be real and have a Wikipedia page",
       "validator": "wikipedia",
       "wikipedia": {
@@ -20,7 +20,7 @@
       "display_name": "Pokémon",
       "resultLabel": "Pokémon",
       "prompt": "Name a Pokémon",
-      "prepHeadline": "How many Pokémon can you name in 5 minutes?",
+      "prepHeadline": "How many Pokémon can you name in {durationMinutes} minutes?",
       "disclaimer": null,
       "validator": "static",
       "listUrl": "/data/pokemon.json",
@@ -49,8 +49,8 @@
       "display_name": "men",
       "resultLabel": "Men",
       "prompt": "Name a man*",
-      "prepHeadline": "How many men* can you name in 5 minutes?",
-      "disclaimer": "*must be real andhave a Wikipedia page",
+      "prepHeadline": "How many men* can you name in {durationMinutes} minutes?",
+      "disclaimer": "*must be real and have a Wikipedia page",
       "validator": "wikipedia",
       "wikipedia": {
         "gender": "male"
@@ -62,7 +62,7 @@
       "display_name": "U.S. Presidents",
       "resultLabel": "U.S. Presidents",
       "prompt": "Name a U.S. President",
-      "prepHeadline": "How many U.S. Presidents can you name in 5 minutes?",
+      "prepHeadline": "How many U.S. Presidents can you name in {durationMinutes} minutes?",
       "disclaimer": null,
       "validator": "static",
       "listUrl": "/data/presidents.json",
