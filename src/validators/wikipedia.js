@@ -22,30 +22,32 @@ export async function validateWikipediaName(query, options = {}) {
   if (!titleQuery) return { ok: false, reason: 'empty' }
 
   const gender = resolveGenderFilter(options)
-
-  const params = new URLSearchParams({
-    action: 'query',
-    generator: 'search',
-    gsrsearch: titleQuery,
-    gsrnamespace: '0',
-    gsrlimit: '1',
-    redirects: '1',
-    prop: 'info|pageprops',
-    ppprop: 'wikibase_item|disambiguation',
-    format: 'json',
-    origin: '*',
+  const exactResult = await fetchWikipediaPage({
+    titles: capitalizeName(titleQuery),
   })
+  if (exactResult.networkError) {
+    return { ok: false, reason: 'network' }
+  }
 
-  const res = await fetch(`https://en.wikipedia.org/w/api.php?${params}`)
-  if (!res.ok) return { ok: false, reason: 'network' }
+  let page = exactResult.page
+  if (isMissingPage(page)) {
+    const searchResult = await fetchWikipediaPage({
+      generator: 'search',
+      gsrsearch: titleQuery,
+      gsrnamespace: '0',
+      gsrlimit: '1',
+    })
+    if (searchResult.networkError) {
+      return { ok: false, reason: 'network' }
+    }
 
-  const data = await res.json()
-  const pages = data?.query?.pages
-  if (!pages) return { ok: false, reason: 'not_found' }
-
-  const page = Object.values(pages)[0]
-  if (!page || page.missing != null || page.invalid != null) {
-    return { ok: false, reason: 'not_found' }
+    page = searchResult.page
+    if (isMissingPage(page)) {
+      return { ok: false, reason: 'not_found' }
+    }
+    if (!isSimilarName(titleQuery, page.title)) {
+      return { ok: false, reason: 'not_close_enough' }
+    }
   }
 
   if (page.pageprops?.disambiguation != null) {
@@ -76,6 +78,91 @@ export async function validateWikipediaName(query, options = {}) {
   }
 
   return { ok: true, name: canonical }
+}
+
+async function fetchWikipediaPage(queryParams) {
+  const params = new URLSearchParams({
+    action: 'query',
+    redirects: '1',
+    prop: 'info|pageprops',
+    ppprop: 'wikibase_item|disambiguation',
+    format: 'json',
+    origin: '*',
+    ...queryParams,
+  })
+
+  const res = await fetch(`https://en.wikipedia.org/w/api.php?${params}`)
+  if (!res.ok) return { page: null, networkError: true }
+
+  const data = await res.json()
+  const pages = data?.query?.pages
+  return {
+    page: pages ? Object.values(pages)[0] : null,
+    networkError: false,
+  }
+}
+
+function isMissingPage(page) {
+  return !page || page.missing != null || page.invalid != null
+}
+
+function capitalizeName(value) {
+  return value
+    .toLocaleLowerCase('en-US')
+    .replace(/(^|[\s'-])\p{L}/gu, (letter) => letter.toLocaleUpperCase('en-US'))
+}
+
+function isSimilarName(query, title) {
+  const queryTokens = nameTokens(query)
+  const titleTokens = nameTokens(title.replace(/\s*\([^)]*\)\s*$/, ''))
+  if (queryTokens.length === 0 || titleTokens.length === 0) return false
+
+  const unusedTitleTokens = [...titleTokens]
+  return queryTokens.every((queryToken) => {
+    const matchIndex = unusedTitleTokens.findIndex(
+      (titleToken) =>
+        levenshteinDistance(queryToken, titleToken) <= allowedTypos(queryToken),
+    )
+    if (matchIndex === -1) return false
+    unusedTitleTokens.splice(matchIndex, 1)
+    return true
+  })
+}
+
+function nameTokens(value) {
+  return (
+    String(value)
+      .normalize('NFKD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLocaleLowerCase('en-US')
+      .match(/[\p{L}\p{N}]+/gu) ?? []
+  )
+}
+
+function allowedTypos(token) {
+  if (token.length <= 3) return 0
+  if (token.length <= 7) return 1
+  return 2
+}
+
+function levenshteinDistance(left, right) {
+  const previous = Array.from({ length: right.length + 1 }, (_, index) => index)
+
+  for (let leftIndex = 1; leftIndex <= left.length; leftIndex += 1) {
+    const current = [leftIndex]
+    for (let rightIndex = 1; rightIndex <= right.length; rightIndex += 1) {
+      const substitutionCost =
+        left[leftIndex - 1] === right[rightIndex - 1] ? 0 : 1
+      current[rightIndex] = Math.min(
+        current[rightIndex - 1] + 1,
+        previous[rightIndex] + 1,
+        previous[rightIndex - 1] + substitutionCost,
+      )
+    }
+    previous.splice(0, previous.length, ...current)
+  }
+
+  return previous[right.length]
 }
 
 function resolveGenderFilter(options) {
