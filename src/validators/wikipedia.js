@@ -11,10 +11,11 @@ const GENDER_IDS = {
     'Q2449503', // transgender male
   ]),
 }
+const HUMAN_ID = 'Q5'
 
 /**
  * Search for a Wikipedia page title (following redirects) and optionally
- * require a matching Wikidata gender (`female` or `male`).
+ * require that its Wikidata item is a real human with a matching gender.
  */
 export async function validateWikipediaName(query, options = {}) {
   const titleQuery = trimInput(query)
@@ -62,9 +63,15 @@ export async function validateWikipediaName(query, options = {}) {
     return { ok: false, reason: 'no_gender' }
   }
 
-  const genderId = await fetchWikidataGender(wikibaseId)
-  if (!genderId) return { ok: false, reason: 'no_gender' }
-  if (!GENDER_IDS[gender].has(genderId)) {
+  const person = await fetchWikidataPerson(wikibaseId)
+  if (!person) return { ok: false, reason: 'no_gender' }
+  if (!person.instanceIds.has(HUMAN_ID)) {
+    return { ok: false, reason: 'not_real_person' }
+  }
+  if (person.genderIds.size === 0) {
+    return { ok: false, reason: 'no_gender' }
+  }
+  if (![...person.genderIds].some((id) => GENDER_IDS[gender].has(id))) {
     return { ok: false, reason: 'wrong_gender' }
   }
 
@@ -80,7 +87,7 @@ function resolveGenderFilter(options) {
   return null
 }
 
-async function fetchWikidataGender(entityId) {
+async function fetchWikidataPerson(entityId) {
   const params = new URLSearchParams({
     action: 'wbgetentities',
     ids: entityId,
@@ -93,8 +100,20 @@ async function fetchWikidataGender(entityId) {
   if (!res.ok) return null
 
   const data = await res.json()
-  const claims = data?.entities?.[entityId]?.claims?.P21
-  if (!claims?.length) return null
+  const claims = data?.entities?.[entityId]?.claims
+  if (!claims) return null
 
-  return claims[0]?.mainsnak?.datavalue?.value?.id ?? null
+  return {
+    genderIds: claimEntityIds(claims.P21),
+    instanceIds: claimEntityIds(claims.P31),
+  }
+}
+
+function claimEntityIds(statements) {
+  return new Set(
+    (statements ?? [])
+      .filter((statement) => statement.rank !== 'deprecated')
+      .map((statement) => statement.mainsnak?.datavalue?.value?.id)
+      .filter(Boolean),
+  )
 }
