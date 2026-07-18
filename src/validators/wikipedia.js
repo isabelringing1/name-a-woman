@@ -5,11 +5,16 @@ const GENDER_IDS = {
   female: new Set([
     'Q6581072', // female
     'Q1052281', // transgender female
-    'Q18116794', // non-binary
+    'Q18116794', // genderfluid
+    'Q27679684', // genderqueer
+    'Q48270', // non-binary
   ]),
   male: new Set([
     'Q6581097', // male
     'Q2449503', // transgender male
+    'Q18116794', // genderfluid
+    'Q27679684', // genderqueer
+    'Q48270', // non-binary
   ]),
 }
 const HUMAN_ID = 'Q5'
