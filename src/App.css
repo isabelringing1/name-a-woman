@@ -12,6 +12,53 @@
   flex-direction: column;
 }
 
+.creator-tag {
+  position: fixed;
+  bottom: calc(14px + env(safe-area-inset-bottom));
+  left: calc(20px + env(safe-area-inset-left));
+  z-index: 10;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  color: var(--ink-muted);
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  opacity: 0.62;
+  transition: opacity 0.15s ease;
+}
+
+.creator-tag:hover,
+.creator-tag:focus-visible {
+  opacity: 1;
+}
+
+.creator-tag:focus-visible {
+  outline: 2px solid var(--link-blue);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+.creator-tag img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+@media (max-width: 719px) {
+  .creator-tag span {
+    display: none;
+  }
+
+  .creator-tag img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+  }
+  
+}
+
 .screen {
   flex: 1;
   display: flex;
@@ -141,7 +188,7 @@
   width: 100%;
   box-sizing: border-box;
   height: 48px;
-  padding: 0 44px 0 16px;
+  padding: 0 80px 0 16px;
   border: 1px solid var(--input-border);
   border-radius: 10px;
   background: #fff;
@@ -155,7 +202,7 @@
 
 .name-input input:focus {
   border-color: #b7a888;
-  box-shadow: 0 0 0 3px rgba(183, 168, 136, 0.25);
+  box-shadow: 0 0 0 2px rgba(183, 168, 136, 0.25);
 }
 
 .name-input--error input {
@@ -169,7 +216,6 @@
 
 .name-input__mark {
   position: absolute;
-  right: 8px;
   top: 64%;
   transform: translateY(-50%);
   display: grid;
@@ -183,6 +229,14 @@
   background: transparent;
   cursor: pointer;
   color: inherit;
+}
+
+.name-input__mark--clear {
+  right: 40px;
+}
+
+.name-input__mark--submit {
+  right: 8px;
 }
 
 .name-input__mark:disabled {
@@ -376,6 +430,19 @@
   color: inherit;
   text-decoration: none;
   cursor: pointer;
+}
+
+.name-list__link:hover,
+.name-list__link:focus-visible {
+  text-decoration: underline;
+}
+
+.external-link-icon{
+  width: 14px;
+  height: 14px;
+  margin-left: 4px;
+  vertical-align: bottom;
+  margin-bottom: 5px;
 }
 
 .name-list--results {

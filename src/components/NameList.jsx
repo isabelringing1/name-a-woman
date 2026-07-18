@@ -1,6 +1,15 @@
 import { wikipediaUrl } from '../utils/wikipediaUrl'
 
-export function NameList({ names, linkWikipedia = false, newestFirst = false, className = '' }) {
+function entryUrl(name, linkType) {
+  if (linkType === 'wikipedia') return wikipediaUrl(name)
+  if (linkType === 'bulbapedia') {
+    const pageTitle = `${name.replaceAll(' ', '_')}_(Pokémon)`
+    return `https://bulbapedia.bulbagarden.net/wiki/${encodeURIComponent(pageTitle)}`
+  }
+  return null
+}
+
+export function NameList({ names, linkType, newestFirst = false, className = '' }) {
   return (
     <ul className={`name-list ${className}`.trim()} aria-live="polite">
       {names.map((name, index) => {
@@ -8,17 +17,18 @@ export function NameList({ names, linkWikipedia = false, newestFirst = false, cl
         const classNames = isNew
           ? 'name-list__item name-list__item--new'
           : 'name-list__item'
+        const href = entryUrl(name, linkType)
 
         return (
           <li key={`${name}-${index}`} className={classNames}>
-            {linkWikipedia ? (
+            {href ? (
               <a
-                href={wikipediaUrl(name)}
+                href={href}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="name-list__link"
               >
-                {name}
+                {name}<img src="./external-link.png" alt="External Link" className="external-link-icon" />
               </a>
             ) : (
               name

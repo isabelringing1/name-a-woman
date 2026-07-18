@@ -5,6 +5,7 @@ const GENDER_IDS = {
   female: new Set([
     'Q6581072', // female
     'Q1052281', // transgender female
+    'Q18116794', // non-binary
   ]),
   male: new Set([
     'Q6581097', // male
@@ -25,6 +26,7 @@ export async function validateWikipediaName(query, options = {}) {
   const exactResult = await fetchWikipediaPage({
     titles: capitalizeName(titleQuery),
   })
+  console.log(exactResult)
   if (exactResult.networkError) {
     return { ok: false, reason: 'network' }
   }
@@ -58,6 +60,7 @@ export async function validateWikipediaName(query, options = {}) {
   const wikibaseId = page.pageprops?.wikibase_item
 
   if (!gender) {
+   
     return { ok: true, name: canonical }
   }
 
@@ -73,6 +76,7 @@ export async function validateWikipediaName(query, options = {}) {
   if (person.genderIds.size === 0) {
     return { ok: false, reason: 'no_gender' }
   }
+  console.log(person.genderIds)
   if (![...person.genderIds].some((id) => GENDER_IDS[gender].has(id))) {
     return { ok: false, reason: 'wrong_gender' }
   }

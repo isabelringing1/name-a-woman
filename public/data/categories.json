@@ -24,6 +24,7 @@
       "disclaimer": null,
       "validator": "static",
       "listUrl": "/data/pokemon.json",
+      "entryLink": "bulbapedia",
       "aliases": {
         "nidoran": "Nidoran♀",
         "nidoranf": "Nidoran♀",
@@ -88,6 +89,55 @@
         "trump": "Donald Trump",
         "biden": "Joe Biden"
       }
+    },
+    {
+      "id": "nfl-teams",
+      "name": "NFL Teams",
+      "display_name": "NFL teams",
+      "resultLabel": "NFL Teams",
+      "prompt": "Name an NFL team",
+      "prepHeadline": "How many NFL teams can you name in {durationMinutes} minutes?",
+      "disclaimer": null,
+      "validator": "static",
+      "listUrl": "/data/nfl-teams.json",
+      "aliases": {
+        "niners": "San Francisco 49ers",
+        "bucs": "Tampa Bay Buccaneers",
+        "cards": "Arizona Cardinals",
+        "jags": "Jacksonville Jaguars",
+        "pats": "New England Patriots"
+      }
+    },
+    {
+      "id": "smash-characters",
+      "name": "Super Smash Bros Characters",
+      "display_name": "Smash characters",
+      "resultLabel": "Super Smash Bros Characters",
+      "prompt": "Name a Super Smash Bros character",
+      "prepHeadline": "How many Super Smash Bros. characters can you name in {durationMinutes} minutes?",
+      "disclaimer": "*playable characters from any Super Smash Bros. game",
+      "validator": "static",
+      "listUrl": "/data/smash-characters.json",
+      "aliases": {
+        "banjo": "Banjo & Kazooie",
+        "captain falcon": "Captain Falcon",
+        "charizard": "Charizard",
+        "dedede": "King Dedede",
+        "dk": "Donkey Kong",
+        "doctor mario": "Dr. Mario",
+        "game and watch": "Mr. Game & Watch",
+        "game & watch": "Mr. Game & Watch",
+        "k rool": "King K. Rool",
+        "king k rool": "King K. Rool",
+        "megaman": "Mega Man",
+        "mr game and watch": "Mr. Game & Watch",
+        "pacman": "Pac-Man",
+        "pokemon trainer": "Pokémon Trainer",
+        "rob": "R.O.B.",
+        "rosalina": "Rosalina & Luma",
+        "zss": "Zero Suit Samus"
+      }
     }
+    
   ]
 }

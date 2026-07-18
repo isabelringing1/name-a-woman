@@ -70,6 +70,7 @@ export function GameScreen({ category, durationSeconds, onFinish }) {
     setStatus('idle')
     try {
       const result = await validateAnswer(submittedValue, category)
+      console.log(result)
       if (!result.ok) {
         setStatus('error')
         return
@@ -135,7 +136,7 @@ export function GameScreen({ category, durationSeconds, onFinish }) {
       <NameList
         names={names}
         newestFirst
-        linkWikipedia={category.validator === 'wikipedia'}
+        linkType={category.entryLink ?? (category.validator === 'wikipedia' ? 'wikipedia' : null)}
       />
     </div>
   )

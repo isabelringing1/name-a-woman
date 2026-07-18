@@ -23,7 +23,7 @@ export function Results({ category, names, onRedo, onBack }) {
       <NameList
         names={names}
         className="name-list--results"
-        linkWikipedia={category.validator === 'wikipedia'}
+        linkType={category.entryLink ?? (category.validator === 'wikipedia' ? 'wikipedia' : null)}
       />
     </div>
   )

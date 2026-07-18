@@ -9,6 +9,19 @@ import { publicUrl } from './utils/publicUrl'
 import { loadStaticList } from './validators/staticList'
 import './App.css'
 
+function CreatorTag() {
+  return (
+    <a
+      className="creator-tag"
+      href="https://isabisabel.com/"
+      aria-label="Visit isabisabel.com"
+    >
+      <span>isabisabel</span>
+      <img src={publicUrl('flower.png')} alt="" />
+    </a>
+  )
+}
+
 export default function App() {
   const [config, setConfig] = useState(null)
   const [loadError, setLoadError] = useState(null)
@@ -68,6 +81,7 @@ export default function App() {
     return (
       <div className="app-shell">
         <p className="load-error">{loadError}</p>
+        <CreatorTag />
       </div>
     )
   }
@@ -76,6 +90,7 @@ export default function App() {
     return (
       <div className="app-shell">
         <p className="loading">Loading…</p>
+        <CreatorTag />
       </div>
     )
   }
@@ -156,6 +171,7 @@ export default function App() {
           }}
         />
       )}
+      <CreatorTag />
     </div>
   )
 }
