@@ -9,11 +9,16 @@ function formatTime(totalSeconds) {
   return `${m}:${String(s).padStart(2, '0')}`
 }
 
+function entryName(entry) {
+  return typeof entry === 'string' ? entry : entry.name
+}
+
 export function GameScreen({ category, durationSeconds, onFinish }) {
   const [secondsLeft, setSecondsLeft] = useState(durationSeconds)
   const [value, setValue] = useState('')
   const [names, setNames] = useState([])
   const [status, setStatus] = useState('idle')
+  const [rejectedInput, setRejectedInput] = useState(null)
   const [checking, setChecking] = useState(false)
   const namesRef = useRef(names)
   const onFinishRef = useRef(onFinish)
@@ -63,6 +68,25 @@ export function GameScreen({ category, durationSeconds, onFinish }) {
     setSecondsLeft(0)
   }
 
+  function handleOverride() {
+    if (!rejectedInput || secondsLeft <= 0) return
+
+    const already = namesRef.current.some(
+      (entry) => entryName(entry).toLowerCase() === rejectedInput.toLowerCase(),
+    )
+    if (already) {
+      setRejectedInput(null)
+      return
+    }
+
+    const nextNames = [{ name: rejectedInput, link: false }, ...namesRef.current]
+    namesRef.current = nextNames
+    setNames(nextNames)
+    setValue('')
+    setRejectedInput(null)
+    setStatus('success')
+  }
+
   async function handleSubmit() {
     if (checking || secondsLeft <= 0) return
     const submittedValue = value
@@ -73,14 +97,18 @@ export function GameScreen({ category, durationSeconds, onFinish }) {
       console.log(result)
       if (!result.ok) {
         setStatus('error')
+        setRejectedInput(
+          category.validator === 'wikipedia' ? submittedValue.trim() : null,
+        )
         return
       }
 
       const already = namesRef.current.some(
-        (n) => n.toLowerCase() === result.name.toLowerCase(),
+        (entry) => entryName(entry).toLowerCase() === result.name.toLowerCase(),
       )
       if (already) {
         setStatus('error')
+        setRejectedInput(null)
         return
       }
 
@@ -88,6 +116,7 @@ export function GameScreen({ category, durationSeconds, onFinish }) {
       namesRef.current = nextNames
       setNames(nextNames)
       setValue((current) => (current === submittedValue ? '' : current))
+      setRejectedInput(null)
       setStatus('success')
 
       if (
@@ -119,12 +148,23 @@ export function GameScreen({ category, durationSeconds, onFinish }) {
         value={value}
         onChange={(next) => {
           setValue(next)
+          setRejectedInput(null)
           if (status !== 'idle') setStatus('idle')
         }}
         onSubmit={handleSubmit}
         disabled={secondsLeft <= 0}
         status={status}
       />
+      {rejectedInput && (
+        <button
+          type="button"
+          className="btn btn--give-up btn--override"
+          onClick={handleOverride}
+          disabled={secondsLeft <= 0}
+        >
+          I swear {rejectedInput} is a {category.id === 'men' ? 'man' : 'woman'}
+        </button>
+      )}
       <button
         type="button"
         className="btn btn--give-up"

@@ -12,12 +12,14 @@ function entryUrl(name, linkType) {
 export function NameList({ names, linkType, newestFirst = false, className = '' }) {
   return (
     <ul className={`name-list ${className}`.trim()} aria-live="polite">
-      {names.map((name, index) => {
+      {names.map((entry, index) => {
+        const name = typeof entry === 'string' ? entry : entry.name
+        const shouldLink = typeof entry === 'string' || entry.link !== false
         const isNew = newestFirst && index === 0
         const classNames = isNew
           ? 'name-list__item name-list__item--new'
           : 'name-list__item'
-        const href = entryUrl(name, linkType)
+        const href = shouldLink ? entryUrl(name, linkType) : null
 
         return (
           <li key={`${name}-${index}`} className={classNames}>
