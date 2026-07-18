@@ -289,15 +289,25 @@
   filter: brightness(0.97);
 }
 
+.btn--share,
 .btn--redo {
   min-width: 168px;
   padding: 14px 20px;
-  background: #f88b5e;
   color: #000000;
   font-size: 1.1rem;
-  margin: 16px 024px;
 }
 
+.btn--share {
+  margin-top: 16px;
+  background: var(--accent-green);
+}
+
+.btn--redo {
+  margin: 8px 0 24px;
+  background: #f88b5e;
+}
+
+.btn--share:hover,
 .btn--redo:hover {
   filter: brightness(0.96);
 }

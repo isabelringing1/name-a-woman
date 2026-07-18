@@ -159,6 +159,7 @@ export default function App() {
         <Results
           category={activeCategory}
           names={results[activeCategory.id]?.names ?? sessionNames ?? []}
+          durationMinutes={config.durationMinutes}
           onBack={() => {
             setActiveId(null)
             setSessionNames(null)
