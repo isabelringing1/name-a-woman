@@ -132,6 +132,34 @@
       }
     },
     {
+      "id": "mlb-teams",
+      "name": "MLB Teams",
+      "display_name": "MLB teams",
+      "resultLabel": "MLB Teams",
+      "prompt": "Name an MLB team",
+      "prepHeadline": "How many MLB teams can you name in {durationMinutes} minutes?",
+      "disclaimer": null,
+      "validator": "static",
+      "listUrl": "/data/mlb-teams.json",
+      "aliases": {
+        "a's": "Athletics",
+        "as": "Athletics",
+        "oakland a's": "Athletics",
+        "oakland athletics": "Athletics",
+        "sacramento a's": "Athletics",
+        "sacramento athletics": "Athletics",
+        "dbacks": "Arizona Diamondbacks",
+        "d-backs": "Arizona Diamondbacks",
+        "bosox": "Boston Red Sox",
+        "chisox": "Chicago White Sox",
+        "halos": "Los Angeles Angels",
+        "jays": "Toronto Blue Jays",
+        "nats": "Washington Nationals",
+        "phils": "Philadelphia Phillies",
+        "yanks": "New York Yankees"
+      }
+    },
+    {
       "id": "smash-characters",
       "name": "Super Smash Bros Characters",
       "display_name": "Smash characters",
